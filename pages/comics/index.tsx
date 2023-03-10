@@ -1,4 +1,4 @@
-import ComicsList from '../../src/components/features/landingPage/comics/ComicsList';
+import ComicsList from '../../src/components/features/comics/ComicsList';
 import AuthWrapper from '../../src/components/shared/authWrapper/AuthWrapper';
 
 export default function Comics() {
