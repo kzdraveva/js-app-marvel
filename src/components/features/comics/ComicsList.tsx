@@ -9,17 +9,19 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useComics } from '../../../hooks/useComics';
+import { useComics } from '../../../hooks/useComicsList';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { ComicCard } from '../../core/comicCard/ComicCard';
 
 export default function ComicsList() {
-  const [title, setTitle] = useState('');
-  const { comics, isLoading } = useComics();
+  const [inputValue, setInputValue] = useState('');
   const router = useRouter();
+  const { title } = router.query;
   const { query } = router;
 
-  const debouncedSearchInput = useDebounce(title, 500);
+  const { data, isLoading } = useComics(title);
+
+  const debouncedSearchInput = useDebounce(inputValue, 500);
 
   useEffect(() => {
     router.push({
@@ -31,7 +33,7 @@ export default function ComicsList() {
   }, [debouncedSearchInput]);
 
   const filterComics = (event) => {
-    setTitle(event.target.value);
+    setInputValue(event.target.value);
   };
 
   const renderSpinner = () => {
@@ -61,7 +63,7 @@ export default function ComicsList() {
           type="text"
           placeholder="Search"
           variant="unstyled"
-          value={title}
+          value={inputValue}
           _focus={{
             borderBottom: '1px solid',
             borderColor: 'primaryColor',
@@ -81,9 +83,9 @@ export default function ComicsList() {
       >
         {isLoading
           ? renderSpinner()
-          : comics?.data.results.length < 1
+          : data?.data.results.length < 1
           ? renderEmptyScreen()
-          : comics?.data.results.map((comic) => {
+          : data?.data.results.map((comic) => {
               const thumbnail = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
 
               return (

@@ -5,8 +5,9 @@ import { useRouter } from 'next/router';
 import { useSingleCharacter } from '../../../hooks/useSingleCharacter';
 
 export default function SingleCharacter() {
-  const { character, isLoading } = useSingleCharacter();
   const router = useRouter();
+  const { id } = router.query;
+  const { data, isLoading } = useSingleCharacter(id);
 
   const hanldeBack = () => {
     router.back();
@@ -43,9 +44,9 @@ export default function SingleCharacter() {
     );
   };
 
-  const name = character?.data.results[0].name;
-  const thumbnail = `${character?.data.results[0].thumbnail.path}.${character?.data.results[0].thumbnail.extension}`;
-  const description = character?.data.results[0].description;
+  const name = data?.data.results[0].name;
+  const thumbnail = `${data?.data.results[0].thumbnail.path}.${data?.data.results[0].thumbnail.extension}`;
+  const description = data?.data.results[0].description;
   return (
     <>
       <Button
@@ -92,19 +93,19 @@ export default function SingleCharacter() {
             <Text>{description}</Text>
             {renderData({
               title: 'Comics',
-              data: character?.data.results[0].comics,
+              data: data?.data.results[0].comics,
               href: `/comics`,
             })}
 
             {renderData({
               title: 'Series',
-              data: character?.data.results[0].series,
+              data: data?.data.results[0].series,
               href: `/series`,
             })}
 
             {renderData({
               title: 'Stories',
-              data: character?.data.results[0].stories,
+              data: data?.data.results[0].stories,
               href: `/stories`,
             })}
           </Box>

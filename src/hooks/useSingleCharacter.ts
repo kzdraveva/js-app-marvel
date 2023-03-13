@@ -3,14 +3,6 @@ import useSWR from 'swr';
 import { ISingleCharacter } from '../interfaces/ISingleCharacter';
 import { fetcher } from '../libs/fetcher';
 
-export const useSingleCharacter = () => {
-  const router = useRouter();
-  const { id } = router.query;
-
-  const { data: character, isLoading } = useSWR<ISingleCharacter>(
-    `/characters/${id}?`,
-    fetcher,
-  );
-
-  return { character, isLoading };
+export const useSingleCharacter = (id: string | string[]) => {
+  return useSWR<ISingleCharacter>(`/characters/${id}?`, fetcher);
 };
