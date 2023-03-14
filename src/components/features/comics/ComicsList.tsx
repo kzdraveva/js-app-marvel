@@ -13,16 +13,20 @@ import { useComics } from '../../../hooks/useComicsList';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { GetNewComicsListResult } from '../../../utils/comicsList';
 import { ComicCard } from '../../core/comicCard/ComicCard';
+import { Pagination } from '../../shared/pagination/Pagination';
+
+const LIMIT = 20;
 
 // Comics list component
 export default function ComicsList() {
-  const [inputValue, setInputValue] = useState('');
   const router = useRouter();
+  const [inputValue, setInputValue] = useState('');
+  const [offsetValue, setOffsetValue] = useState(0);
+
   const { title } = router.query;
   const { query } = router;
 
-  const { data, isLoading } = useComics(title);
-
+  const { data, isLoading } = useComics(title, offsetValue, LIMIT);
   const newComics = GetNewComicsListResult(data);
 
   const debouncedSearchInput = useDebounce(inputValue, 500);
@@ -42,11 +46,23 @@ export default function ComicsList() {
     setInputValue(event.target.value);
   };
 
+  const handlePageChange = (pageNumber) => {
+    const newOffsetValue = (pageNumber - 1) * newComics.data.limit;
+    setOffsetValue(newOffsetValue);
+    router.push({
+      query: {
+        ...query,
+        offset: newOffsetValue,
+        limit: LIMIT,
+      },
+    });
+  };
+
   // HELPER RENDER FUNCTIONS
   // -----------------------
   const renderSpinner = () => {
     return (
-      <Flex justifyContent="center" alignItems="center" h="calc(100vh - 180px)">
+      <Flex justifyContent="center" alignItems="center" h="calc(100vh - 270px)">
         <Spinner size="xl" color="secondaryColor" />
       </Flex>
     );
@@ -54,7 +70,7 @@ export default function ComicsList() {
 
   const renderEmptyScreen = () => {
     return (
-      <Flex justifyContent="center" alignItems="center" h="calc(100vh - 180px)">
+      <Flex justifyContent="center" alignItems="center" h="calc(100vh - 270px)">
         <Text fontSize="xl">No items found with title: {title}</Text>
       </Flex>
     );
@@ -86,8 +102,9 @@ export default function ComicsList() {
         flexWrap="wrap"
         gap="25px"
         justifyContent="center"
-        maxH="calc(100vh - 190px)"
+        maxH="calc(100vh - 230px)"
         p="20px"
+        mb="10px"
         zIndex="1"
         overflow="auto"
       >
@@ -108,6 +125,14 @@ export default function ComicsList() {
               );
             })}
       </Flex>
+      {newComics.data.results && (
+        <Pagination
+          currentPage={Math.floor(offsetValue / newComics.data.limit) + 1}
+          pageRangeDisplayed={3}
+          lastPage={Math.ceil(newComics.data.total / newComics.data.limit)}
+          onPageChange={handlePageChange}
+        />
+      )}
     </>
   );
 }
