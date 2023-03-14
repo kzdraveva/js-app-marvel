@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useComics } from '../../../hooks/useComicsList';
 import { useDebounce } from '../../../hooks/useDebounce';
+import { GetNewComicsListResult } from '../../../utils/comicsList';
 import { ComicCard } from '../../core/comicCard/ComicCard';
 
 // Comics list component
@@ -21,6 +22,8 @@ export default function ComicsList() {
   const { query } = router;
 
   const { data, isLoading } = useComics(title);
+
+  const newComics = GetNewComicsListResult(data);
 
   const debouncedSearchInput = useDebounce(inputValue, 500);
 
@@ -92,14 +95,14 @@ export default function ComicsList() {
           ? renderSpinner()
           : data?.data.results.length < 1
           ? renderEmptyScreen()
-          : data?.data.results.map((comic) => {
+          : newComics?.data.results.map((comic) => {
               const thumbnail = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
 
               return (
                 <ComicCard
                   key={comic.id}
                   cardId={comic.id}
-                  title={comic.title}
+                  title={comic.composedTitle}
                   src={thumbnail}
                 />
               );
