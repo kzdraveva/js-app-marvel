@@ -4,15 +4,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSingleCharacter } from '../../../hooks/useSingleCharacter';
 
+// Single character component
 export default function SingleCharacter() {
   const router = useRouter();
   const { id } = router.query;
   const { data, isLoading } = useSingleCharacter(id);
 
+  // HELPER FUNCTIONS
+  // ----------------
   const hanldeBack = () => {
     router.back();
   };
 
+  // HELPER RENDER FUNCTIONS
+  // -----------------------
   const renderSpinner = () => {
     return (
       <Flex justifyContent="center" alignItems="center" h="calc(100vh - 190px)">
@@ -21,6 +26,7 @@ export default function SingleCharacter() {
     );
   };
 
+  // Helper function for rendering information about comics, series and stories for each character
   const renderData = ({ title, data, href }) => {
     return (
       <>
@@ -47,6 +53,9 @@ export default function SingleCharacter() {
   const name = data?.data.results[0].name;
   const thumbnail = `${data?.data.results[0].thumbnail.path}.${data?.data.results[0].thumbnail.extension}`;
   const description = data?.data.results[0].description;
+
+  // MAIN RENDER
+  // -----------
   return (
     <>
       <Button

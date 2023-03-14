@@ -1,6 +1,9 @@
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 
+// Login form component
 export const LoginForm = () => {
+  // MAIN RENDER
+  // -----------
   return (
     <form>
       <FormControl mb="20px">

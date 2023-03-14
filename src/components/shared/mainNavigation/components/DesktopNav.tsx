@@ -4,6 +4,7 @@ import { RegisterForm } from '../../../features/authForms/RegisterForm';
 import { CustomModal } from '../../modal/CustomModal';
 import { NavLink } from './NavLink';
 
+// Desktop navigation (depending on user login status we are rendering authNav and unAuthNav)
 export const DesktopNav = () => {
   const {
     isOpen: isLoginOpen,
@@ -15,11 +16,15 @@ export const DesktopNav = () => {
     onOpen: onRegisterOpen,
     onClose: onRegisterClose,
   } = useDisclosure();
-  const isAuth = false;
 
+  const isAuth = true;
+
+  // MAIN RENDER
+  // ----------
   return (
     <Flex as="nav">
       {isAuth ? (
+        // Render authenticated desktop navigation
         <>
           <NavLink href="/comics" title="Comics" />
           <NavLink href="/series" title="Series" />
@@ -35,6 +40,7 @@ export const DesktopNav = () => {
           </Button>
         </>
       ) : (
+        // Render unAuthenticated desktop navigation
         <Flex gap="15px">
           <CustomModal
             buttonName="Login"

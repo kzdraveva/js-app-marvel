@@ -4,8 +4,13 @@ import { Logo } from '../../../assets/images/Logo';
 import { DesktopNav } from './components/DesktopNav';
 import { MobileNav } from './components/MobileNav';
 
+
+// Main navigation component
 export const MainNavigation = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
+
+  // MAIN RENDER
+  // ----------
   return (
     <Flex h="70px" alignItems="center" justifyContent="space-between">
       <Link href="/" passHref>

@@ -4,15 +4,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSingleComic } from '../../../hooks/useSingleComic';
 
+// Single comic component
 export default function () {
   const router = useRouter();
   const { id } = router.query;
   const { data, isLoading } = useSingleComic(id);
 
+  // HELPER FUNCTIONS
+  // ----------------
   const hanldeBack = () => {
     router.back();
   };
 
+  // HELPER RENDER FUNCTIONS
+  // -----------------------
   const renderCharacters = () => {
     return (
       <>
@@ -65,6 +70,8 @@ export default function () {
   const title = data?.data.results[0].title;
   const description = data?.data.results[0].description;
 
+  // MAIN RENDER
+  // -----------
   return (
     <>
       <Button

@@ -6,7 +6,10 @@ interface IAuthWrapper {
   children: any;
 }
 
+// Authenticated wrapper
 export default function AuthWrapper({ children, title }: IAuthWrapper) {
+  // MAIN RENDER
+  // ----------
   return (
     <Box p="20px" h="100vh">
       <MainNavigation />

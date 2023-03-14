@@ -13,6 +13,7 @@ import { useComics } from '../../../hooks/useComicsList';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { ComicCard } from '../../core/comicCard/ComicCard';
 
+// Comics list component
 export default function ComicsList() {
   const [inputValue, setInputValue] = useState('');
   const router = useRouter();
@@ -32,10 +33,14 @@ export default function ComicsList() {
     });
   }, [debouncedSearchInput]);
 
+  // HELPER FUNCTIONS
+  // ---------------
   const filterComics = (event) => {
     setInputValue(event.target.value);
   };
 
+  // HELPER RENDER FUNCTIONS
+  // -----------------------
   const renderSpinner = () => {
     return (
       <Flex justifyContent="center" alignItems="center" h="calc(100vh - 180px)">
@@ -52,6 +57,8 @@ export default function ComicsList() {
     );
   };
 
+  // MAIN RENDER
+  // -----------
   return (
     <>
       <InputGroup alignItems="center" h="40px">

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+// Custom hook for debouncing
+// for example used on searchInput
 export const useDebounce = (value: any, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 

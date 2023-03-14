@@ -1,6 +1,9 @@
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 
+// Register form component
 export const RegisterForm = () => {
+  // MAIN RENDER
+  // -----------
   return (
     <form>
       <FormControl mb="20px">

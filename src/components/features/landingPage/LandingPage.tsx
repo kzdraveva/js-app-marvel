@@ -3,7 +3,10 @@ import Link from 'next/link';
 import { MainNavigation } from '../../shared/mainNavigation/MainNavigation';
 import LandingPageWrapper from './components/LandingPageWrapper';
 
+// Landing page component
 export default function LandingPage() {
+  // MAIN RENDER
+  // -----------
   return (
     <LandingPageWrapper>
       <MainNavigation />

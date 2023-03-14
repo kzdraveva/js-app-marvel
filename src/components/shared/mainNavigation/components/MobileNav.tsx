@@ -17,6 +17,8 @@ import { LoginForm } from '../../../features/authForms/LoginForm';
 import { RegisterForm } from '../../../features/authForms/RegisterForm';
 import { CustomModal } from '../../modal/CustomModal';
 import { NavLink } from './NavLink';
+
+// Mobile navigation (depending on user login status we are rendering authNav and unAuthNav)
 export const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {
@@ -32,9 +34,13 @@ export const MobileNav = () => {
 
   const isAuth = false;
 
+  // HELPER FUNCTIONS
+  // ----------------
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
 
+  // MAIN RENDER
+  // -----------
   return (
     <>
       <Box display={{ base: 'block', md: 'none' }}>
@@ -63,6 +69,7 @@ export const MobileNav = () => {
 
           <VStack p="2" spacing="4">
             {isAuth ? (
+              // Render authenticated mobile navigation
               <>
                 <NavLink href="/comics" title="Comics" />
                 <NavLink href="/series" title="Series" />
@@ -79,6 +86,7 @@ export const MobileNav = () => {
                 </Button>
               </>
             ) : (
+              // Render unauthenticated mobile navigation
               <>
                 <CustomModal
                   buttonName="Login"

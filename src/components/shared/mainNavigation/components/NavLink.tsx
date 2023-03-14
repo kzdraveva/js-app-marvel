@@ -6,10 +6,14 @@ interface INavLink {
   href: string;
   title: string;
 }
+
+// Navigation link component
 export const NavLink = ({ href, title }: INavLink) => {
   const router = useRouter();
   const isCurrent = router.asPath.includes(href);
 
+  // MAIN RENDER
+  // -----------
   return (
     <Link href={href} passHref>
       <Box

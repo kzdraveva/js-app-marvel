@@ -1,6 +1,7 @@
 import { modalAnatomy } from '@chakra-ui/anatomy';
 import { createMultiStyleConfigHelpers } from '@chakra-ui/react';
 
+// Extended theme for Chakra UI Modal
 const {
   definePartsStyle,
   defineMultiStyleConfig,

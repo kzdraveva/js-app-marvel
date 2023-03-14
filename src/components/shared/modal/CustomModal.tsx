@@ -7,7 +7,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
 } from '@chakra-ui/react';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 
@@ -21,6 +20,7 @@ interface ICustomModal {
   children: any;
 }
 
+// Custom modal component
 export const CustomModal = ({
   buttonName,
   title,
@@ -32,6 +32,8 @@ export const CustomModal = ({
 }: ICustomModal) => {
   const modalRef = useRef(null);
 
+  // Calculating the position of the modal
+  // called synchronously after every render, before the browser has had a chance to paint the screen
   useLayoutEffect(() => {
     const recalculateModalPosition = () => {
       const modal = modalRef.current;
@@ -40,14 +42,18 @@ export const CustomModal = ({
         const windowHeight = window.innerHeight;
         const modalHeight = modal.clientHeight;
         modal.style.top = `${Math.max((windowHeight - modalHeight) / 2, 0)}px`;
+        modal.style.marginTop = 0;
       }
     };
 
     recalculateModalPosition();
   }, [isModalOpen]);
 
+  // Calculating the position of the modal
+  // the update occurs after any layout changes caused by the previous rendering have been applied
   useEffect(() => {
     const recalculateModalPosition = () => {
+      // wait for the next frame before updating the position
       requestAnimationFrame(() => {
         const modal = modalRef.current;
 
@@ -58,6 +64,7 @@ export const CustomModal = ({
             (windowHeight - modalHeight) / 2,
             0,
           )}px`;
+          modal.style.marginTop = 0;
         }
       });
     };
@@ -71,6 +78,8 @@ export const CustomModal = ({
     };
   }, [isModalOpen]);
 
+  // MAIN RENDER
+  // -----------
   return (
     <>
       <Button

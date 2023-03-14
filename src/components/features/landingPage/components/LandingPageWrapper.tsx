@@ -1,6 +1,9 @@
-import { Flex, Box } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 
+// Landing page wrapper component
 export default function LandingPageWrapper({ children }) {
+  // MAIN RENDER
+  // -----------
   return (
     <Box h="100vh" p="20px">
       <Box

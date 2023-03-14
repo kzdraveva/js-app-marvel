@@ -5,7 +5,11 @@ interface IComicCard {
   src: string;
   title: string;
 }
+
+// Comic card component
 export const ComicCard = ({ src, title, cardId }) => {
+  // MAIN RENDER
+  // -----------
   return (
     <Link href={`/comics/${cardId}`}>
       <Flex
