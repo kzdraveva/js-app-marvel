@@ -2,10 +2,24 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Image, Flex, Spinner, Heading, Text, Button } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useSingleComic } from '../../../hooks/useSingleComic';
+import {
+  ISingleComicCharacters,
+  ISingleComicCreators,
+} from '../../../interfaces/ISingleComic';
+import { CustomModal } from '../../shared/modal/CustomModal';
+
+enum ModalTypes {
+  Characters = 'Characterss',
+  Creators = 'Creators',
+}
+
+const MAX_ITEMS_TO_SHOW = 10;
 
 // Single comic component
-export default function SingleComic () {
+export default function SingleComic() {
+  const [modalType, setModalType] = useState(null);
   const router = useRouter();
   const { id } = router.query;
   const { data, isLoading } = useSingleComic(id);
@@ -13,7 +27,20 @@ export default function SingleComic () {
   // HELPER FUNCTIONS
   // ----------------
   const hanldeBack = () => {
-    router.back();
+    window.history.back();
+  };
+
+  const handleBubbleBtnClick = (type: ModalTypes) => {
+    // Set the modalType based on the type
+    if (type === ModalTypes.Characters) {
+      setModalType(ModalTypes.Characters);
+    } else {
+      setModalType(ModalTypes.Creators);
+    }
+  };
+
+  const closeModal = () => {
+    setModalType(null);
   };
 
   // HELPER RENDER FUNCTIONS
@@ -24,19 +51,30 @@ export default function SingleComic () {
         <Flex gap="20px">
           <Text>Characters:</Text>
           <Flex flexWrap="wrap" gap="10px">
-            {data?.data.results[0].characters.items.map((character) => {
-              return (
-                <Link
-                  href={`/characters/${character.resourceURI.split('/').pop()}`}
-                  key={character.resourceURI}
-                  passHref
-                >
-                  <Text _hover={{ color: 'secondaryColor' }}>
-                    {character.name}
-                  </Text>
-                </Link>
-              );
-            })}
+            {data?.data.results[0].characters.items
+              .slice(0, MAX_ITEMS_TO_SHOW)
+              .map((character) => {
+                return (
+                  <Link
+                    href={`/characters/${character.resourceURI
+                      .split('/')
+                      .pop()}`}
+                    key={character.resourceURI}
+                    passHref
+                  >
+                    <Text _hover={{ color: 'secondaryColor' }}>
+                      {character.name}
+                    </Text>
+                  </Link>
+                );
+              })}
+            {renderBubbleBtn(
+              data?.data.results[0].characters,
+              'Characters',
+              ModalTypes.Characters,
+              handleBubbleBtnClick,
+              `/characters`,
+            )}
           </Flex>
         </Flex>
       </>
@@ -49,13 +87,67 @@ export default function SingleComic () {
         <Flex gap="32px">
           <Text>Creators:</Text>
           <Flex flexWrap="wrap" gap="10px">
-            {data?.data.results[0].creators.items.map((creator) => {
-              return <Text key={creator.resourceURI}>{creator.name}</Text>;
-            })}
+            {data?.data.results[0].creators.items
+              .slice(0, MAX_ITEMS_TO_SHOW)
+              .map((creator) => {
+                return <Text key={creator.resourceURI}>{creator.name}</Text>;
+              })}
+            {renderBubbleBtn(
+              data?.data.results[0].creators,
+              'Creators',
+              ModalTypes.Creators,
+              handleBubbleBtnClick,
+            )}
           </Flex>
         </Flex>
       </>
     );
+  };
+
+  const renderBubbleBtn = (
+    data: ISingleComicCreators | ISingleComicCharacters,
+    title: string,
+    type: ModalTypes,
+    handleBubbleBtnClick: (type) => void,
+    href?: string,
+  ) => {
+    if (data && data.items.length > MAX_ITEMS_TO_SHOW) {
+      return (
+        <>
+          <CustomModal
+            variant="white"
+            buttonName={`+ ${data.items.length - MAX_ITEMS_TO_SHOW}`}
+            buttonHeight="25px"
+            title={title}
+            onModalOpen={() => handleBubbleBtnClick(type)}
+            onModalClose={closeModal}
+            isModalOpen={modalType === type}
+          >
+            <Flex flexDirection="column" maxH="450px" overflow="auto" gap="5px">
+              {data.items.map((item) => {
+                if (!href) {
+                  return <Text>{item.name}</Text>;
+                }
+
+                return (
+                  <Link
+                    href={`${href}/${item.resourceURI.split('/').pop()}`}
+                    key={item.resourceURI}
+                    passHref
+                  >
+                    <Text _hover={{ color: 'secondaryColor' }}>
+                      {item.name}
+                    </Text>
+                  </Link>
+                );
+              })}
+            </Flex>
+          </CustomModal>
+        </>
+      );
+    }
+
+    return null;
   };
 
   const renderSpinner = () => {
