@@ -20,6 +20,7 @@ interface ICustomModal {
   title: string;
   children: any;
   footerContent?: any;
+  variant: string;
 }
 
 // Custom modal component
@@ -33,6 +34,7 @@ export const CustomModal = ({
   onModalClose,
   isModalOpen,
   footerContent,
+  variant,
 }: ICustomModal) => {
   const modalRef = useRef(null);
 
@@ -96,13 +98,18 @@ export const CustomModal = ({
       >
         {buttonName}
       </Button>
-      <Modal isOpen={isModalOpen} onClose={onModalClose}>
+      <Modal isOpen={isModalOpen} onClose={onModalClose} variant={variant}>
         <ModalOverlay />
-        <ModalContent ref={modalRef}>
+        <ModalContent
+          ref={modalRef}
+          color={variant === 'white' ? 'tertiaryColor' : 'primaryColor'}
+        >
           <ModalHeader w="100%" textAlign="center">
             {title}
           </ModalHeader>
-          <ModalCloseButton color="primaryColor" />
+          <ModalCloseButton
+            color={variant === 'white' ? 'tertiaryColor' : 'primaryColor'}
+          />
           <ModalBody>{children}</ModalBody>
 
           {footerContent ? <ModalFooter>{footerContent}</ModalFooter> : null}

@@ -89,6 +89,7 @@ export const MobileNav = () => {
               // Render unauthenticated mobile navigation
               <>
                 <CustomModal
+                  variant="black"
                   buttonName="Login"
                   buttonWidth="100%"
                   title="LOGIN"
@@ -105,6 +106,7 @@ export const MobileNav = () => {
                 </CustomModal>
 
                 <CustomModal
+                  variant="black"
                   buttonName="Register"
                   buttonWidth="100%"
                   title="REGISTER"

@@ -6,7 +6,7 @@ interface IAuthWrapper {
   children: any;
 }
 
-// Authenticated wrapper
+// Wrapper for authenticated pages
 export default function AuthWrapper({ children, title }: IAuthWrapper) {
   // MAIN RENDER
   // ----------

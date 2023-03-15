@@ -9,8 +9,14 @@ const {
 
 const baseStyle = definePartsStyle({
   dialog: {
-    borderRadius: 'md',
-    bg: `tertiaryColor`,
+    variants: {
+      black: {
+        background: 'tertiaryColor',
+      },
+      white: {
+        background: 'primaryColor',
+      },
+    },
   },
 });
 

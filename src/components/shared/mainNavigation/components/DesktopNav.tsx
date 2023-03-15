@@ -43,6 +43,7 @@ export const DesktopNav = () => {
         // Render unAuthenticated desktop navigation
         <Flex gap="15px">
           <CustomModal
+            variant="black"
             buttonName="Login"
             title="LOGIN"
             footerContent={
@@ -57,6 +58,7 @@ export const DesktopNav = () => {
             <LoginForm />
           </CustomModal>
           <CustomModal
+            variant="black"
             buttonName="Register"
             title="REGISTER"
             footerContent={

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useSingleComic } from '../../../hooks/useSingleComic';
 
 // Single comic component
-export default function () {
+export default function SingleComic () {
   const router = useRouter();
   const { id } = router.query;
   const { data, isLoading } = useSingleComic(id);

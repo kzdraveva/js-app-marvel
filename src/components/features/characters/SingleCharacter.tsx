@@ -1,16 +1,14 @@
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Button,
-  Flex,
-  Image,
-  Spinner,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Spinner, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useSingleCharacter } from '../../../hooks/useSingleCharacter';
+import {
+  ISingleCharacterComics,
+  ISingleCharacterSeries,
+  ISingleCharacterStories,
+} from '../../../interfaces/ISingleCharacter';
 import { CustomModal } from '../../shared/modal/CustomModal';
 
 enum ModalTypes {
@@ -19,12 +17,12 @@ enum ModalTypes {
   Stories = 'Stories',
 }
 
-const MAX_ITEMS_TO_SHOW = 10;
+const MAX_ITEMS_TO_SHOW = 5;
 
 // Single character component
 export default function SingleCharacter() {
-  const [itemsToShow, setItemsToShow] = useState(5);
   const [modalType, setModalType] = useState(null);
+
   const router = useRouter();
   const { id } = router.query;
   const { data, isLoading } = useSingleCharacter(id);
@@ -61,7 +59,14 @@ export default function SingleCharacter() {
   };
 
   // Helper function for rendering information about comics, series and stories for each character
-  const renderData = ({ title, data, href }) => {
+  const renderData = (
+    title: string,
+    data:
+      | ISingleCharacterComics
+      | ISingleCharacterSeries
+      | ISingleCharacterStories,
+    href: string,
+  ) => {
     let type: ModalTypes;
     if (title === 'Comics') {
       type = ModalTypes.Comics;
@@ -70,12 +75,13 @@ export default function SingleCharacter() {
     } else {
       type = ModalTypes.Stories;
     }
+
     return (
       <>
-        <Flex gap="30px">
+        <Flex gap="20px">
           <Text>{title}</Text>
           <Flex flexWrap="wrap" gap="10px">
-            {data.items.slice(0, itemsToShow).map((item) => {
+            {data.items.slice(0, MAX_ITEMS_TO_SHOW).map((item) => {
               return (
                 <Link
                   href={`${href}/${item.resourceURI.split('/').pop()}`}
@@ -94,16 +100,20 @@ export default function SingleCharacter() {
   };
 
   const renderBubbleBtn = (
-    data,
+    data:
+      | ISingleCharacterComics
+      | ISingleCharacterSeries
+      | ISingleCharacterStories,
     title: string,
     type: ModalTypes,
     handleBubbleBtnClick: (type) => void,
-    href,
+    href: string,
   ) => {
     if (data && data.items.length > MAX_ITEMS_TO_SHOW) {
       return (
         <>
           <CustomModal
+            variant="white"
             buttonName={`+ ${data.items.length - MAX_ITEMS_TO_SHOW}`}
             buttonHeight="25px"
             title={title}
@@ -111,7 +121,7 @@ export default function SingleCharacter() {
             onModalClose={closeModal}
             isModalOpen={modalType === type}
           >
-            <Flex flexDirection="column">
+            <Flex flexDirection="column" maxH="450px" overflow="auto" gap="5px">
               {data.items.map((item) => {
                 return (
                   <Link
@@ -179,30 +189,18 @@ export default function SingleCharacter() {
             </Text>
           </Box>
           <Flex
-            w={{ base: '100%', md: '60%' }}
+            w={{ base: '100%', md: '50%' }}
             maxH="calc(100vh - 200px)"
             overflow="auto"
             flexDirection="column"
-            justifyContent="center"
+            gap="10px"
           >
             <Text>{description}</Text>
-            {renderData({
-              title: 'Comics',
-              data: data?.data.results[0].comics,
-              href: `/comics`,
-            })}
+            {renderData('Comics', data?.data.results[0].comics, `/comics`)}
 
-            {renderData({
-              title: 'Series',
-              data: data?.data.results[0].series,
-              href: `/series`,
-            })}
+            {renderData('Series', data?.data.results[0].series, `/series`)}
 
-            {renderData({
-              title: 'Stories',
-              data: data?.data.results[0].stories,
-              href: `/stories`,
-            })}
+            {renderData('Stories', data?.data.results[0].stories, `/stories`)}
           </Flex>
         </Flex>
       )}
