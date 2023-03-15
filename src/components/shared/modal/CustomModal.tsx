@@ -16,8 +16,10 @@ interface ICustomModal {
   onModalClose(): void;
   buttonName: string;
   buttonWidth?: string;
+  buttonHeight?: string;
   title: string;
   children: any;
+  footerContent?: any;
 }
 
 // Custom modal component
@@ -26,9 +28,11 @@ export const CustomModal = ({
   title,
   children,
   buttonWidth,
+  buttonHeight,
   onModalOpen,
   onModalClose,
   isModalOpen,
+  footerContent,
 }: ICustomModal) => {
   const modalRef = useRef(null);
 
@@ -86,6 +90,7 @@ export const CustomModal = ({
         variant="outline"
         transition="all 0.1s"
         width={buttonWidth}
+        height={buttonHeight}
         _hover={{ transform: 'scale(1.1)' }}
         onClick={onModalOpen}
       >
@@ -100,11 +105,7 @@ export const CustomModal = ({
           <ModalCloseButton color="primaryColor" />
           <ModalBody>{children}</ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={onModalClose}>
-              {title}
-            </Button>
-          </ModalFooter>
+          {footerContent ? <ModalFooter>{footerContent}</ModalFooter> : null}
         </ModalContent>
       </Modal>
     </>

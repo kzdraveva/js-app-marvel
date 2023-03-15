@@ -45,6 +45,11 @@ export const DesktopNav = () => {
           <CustomModal
             buttonName="Login"
             title="LOGIN"
+            footerContent={
+              <Button colorScheme="red" mr={3} onClick={onLoginClose}>
+                Login
+              </Button>
+            }
             isModalOpen={isLoginOpen}
             onModalOpen={onLoginOpen}
             onModalClose={onLoginClose}
@@ -54,6 +59,11 @@ export const DesktopNav = () => {
           <CustomModal
             buttonName="Register"
             title="REGISTER"
+            footerContent={
+              <Button colorScheme="red" mr={3} onClick={onRegisterClose}>
+                Register
+              </Button>
+            }
             onModalOpen={onRegisterOpen}
             isModalOpen={isRegisterOpen}
             onModalClose={onRegisterClose}

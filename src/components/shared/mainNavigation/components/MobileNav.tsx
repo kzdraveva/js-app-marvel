@@ -92,6 +92,11 @@ export const MobileNav = () => {
                   buttonName="Login"
                   buttonWidth="100%"
                   title="LOGIN"
+                  footerContent={
+                    <Button colorScheme="red" mr={3} onClick={onLoginClose}>
+                      Login
+                    </Button>
+                  }
                   isModalOpen={isLoginOpen}
                   onModalOpen={onLoginOpen}
                   onModalClose={onLoginClose}
@@ -103,6 +108,11 @@ export const MobileNav = () => {
                   buttonName="Register"
                   buttonWidth="100%"
                   title="REGISTER"
+                  footerContent={
+                    <Button colorScheme="red" mr={3} onClick={onRegisterClose}>
+                      Register
+                    </Button>
+                  }
                   onModalOpen={onRegisterOpen}
                   isModalOpen={isRegisterOpen}
                   onModalClose={onRegisterClose}

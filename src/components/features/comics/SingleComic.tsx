@@ -97,15 +97,17 @@ export default function () {
           alignItems="center"
           flexDirection={{ base: 'column', md: 'row' }}
           gap="40px"
-          h="calc(100vh - 190px)"
+          h="calc(100vh - 200px)"
         >
           <Image
             src={thumbnail}
             w={{ base: '200px', md: '350px' }}
-            maxH={{ base: '300px', md: '450px' }}
+            maxH={{ base: '250px', md: '450px' }}
           />
           <Flex
-            w={{ base: '80%', md: '50%' }}
+            w={{ base: '100%', md: '50%' }}
+            maxH="calc(100vh - 200px)"
+            overflow="auto"
             flexDirection="column"
             gap="10px"
           >
