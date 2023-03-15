@@ -3,7 +3,7 @@ import { IComicsList } from '../interfaces/IComicsList';
 import { fetcher } from '../libs/fetcher';
 
 // Custom hook for fetching comics list
-export const useComics = (
+export const useComicsList = (
   title: string | string[],
   offset: number,
   limit: number,
