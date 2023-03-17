@@ -7,7 +7,6 @@ import {
   DrawerContent,
   DrawerOverlay,
   IconButton,
-  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
 import Link from 'next/link';
@@ -15,13 +14,13 @@ import { useState } from 'react';
 import { Logo } from '../../../../assets/images/Logo';
 import { NavLink } from './NavLink';
 import useAuth from '../../../../hooks/useAuth';
+import { useRouter } from 'next/router';
 
 // Mobile navigation (depending on user login status we are rendering authNav and unAuthNav)
 export const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const { user, logout } = useAuth();
-  const isAuth = user !== null;
+  const router = useRouter();
+  const { isAuth, logout } = useAuth();
 
   // HELPER FUNCTIONS
   // ----------------
@@ -30,6 +29,7 @@ export const MobileNav = () => {
 
   const handleLogout = async () => {
     await logout();
+    router.push('/');
   };
 
   // MAIN RENDER

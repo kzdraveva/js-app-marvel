@@ -1,4 +1,4 @@
-import { border, Box } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -9,7 +9,7 @@ interface INavLink {
 }
 
 // Navigation link component
-export const NavLink = ({ href, title, isAuth }: INavLink) => {
+export const NavLink = ({ href, title }: INavLink) => {
   const router = useRouter();
   const isCurrent = router.asPath.includes(href);
 

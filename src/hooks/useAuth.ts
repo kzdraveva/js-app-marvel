@@ -32,7 +32,9 @@ const useAuth = () => {
     return unsubscribe;
   }, []);
 
-  return { user, isLoading, register, login, logout };
+  const isAuth = user !== null;
+
+  return { user, isAuth, isLoading, register, login, logout };
 };
 
 export default useAuth;

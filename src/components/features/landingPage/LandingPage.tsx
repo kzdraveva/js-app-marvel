@@ -31,11 +31,7 @@ export default function LandingPage() {
     onClose: onRegisterClose,
   } = useDisclosure();
 
-  const { user } = useAuth();
-  const isAuth = user !== null;
-
-  //HELPER FUNCTIONS
-  // --------------
+  const { isAuth } = useAuth();
 
   // MAIN RENDER
   // -----------
@@ -65,10 +61,15 @@ export default function LandingPage() {
                 Login
               </Button>
 
-              <Modal isOpen={isLoginOpen} onClose={onLoginClose} isCentered>
+              <Modal
+                isOpen={isLoginOpen}
+                onClose={onLoginClose}
+                isCentered
+                variant="dark"
+              >
                 <ModalOverlay />
                 <ModalContent>
-                  <ModalHeader>Login</ModalHeader>
+                  <ModalHeader textAlign="center">Login</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
                     <LoginForm onClose={onLoginClose} />
@@ -83,13 +84,14 @@ export default function LandingPage() {
               </Button>
 
               <Modal
+                variant="dark"
                 isOpen={isRegisterOpen}
                 onClose={onRegisterClose}
                 isCentered
               >
                 <ModalOverlay />
                 <ModalContent>
-                  <ModalHeader>Register</ModalHeader>
+                  <ModalHeader textAlign="center">Register</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
                     <RegisterForm onClose={onRegisterClose} />

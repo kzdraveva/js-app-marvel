@@ -3,7 +3,7 @@ import AuthWrapper from '../../src/components/shared/authWrapper/AuthWrapper';
 import withAuth from '../../src/components/shared/utilities/Auth';
 
 // Comics list page
-const Comics = () => {
+const ComicsPage = () => {
   return (
     <AuthWrapper title="Comics">
       <ComicsList />
@@ -11,4 +11,4 @@ const Comics = () => {
   );
 };
 
-export default withAuth(Comics);
+export default withAuth(ComicsPage);

@@ -9,15 +9,20 @@ const {
 
 const baseStyle = definePartsStyle({
   dialog: {
-    variants: {
-      black: {
-        background: 'tertiaryColor',
-      },
-      white: {
-        background: 'primaryColor',
-      },
-    },
+    bg: 'primaryColor',
+    color: 'tertiaryColor',
   },
 });
 
-export const modalTheme = defineMultiStyleConfig({ baseStyle });
+const darkVariant = definePartsStyle({
+  dialog: {
+    bg: 'tertiaryColor',
+    color: 'primaryColor',
+  },
+});
+
+const variants = {
+  dark: darkVariant,
+};
+
+export const modalTheme = defineMultiStyleConfig({ baseStyle, variants });

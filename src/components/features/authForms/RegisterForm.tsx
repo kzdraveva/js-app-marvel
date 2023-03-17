@@ -6,21 +6,22 @@ import {
   Input,
   useToast,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 
 // Register form component
 export const RegisterForm = ({ onClose }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { register } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { register: registerUser } = useAuth();
   const toast = useToast();
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (formData) => {
     try {
-      await register(email, password);
+      await registerUser(formData.email, formData.password);
       toast({
         title: 'Registered',
         description: 'You have successfully registered.',
@@ -39,34 +40,39 @@ export const RegisterForm = ({ onClose }) => {
       });
     }
   };
+
   // MAIN RENDER
   // -----------
   return (
-    <form onSubmit={handleRegister}>
-      <Flex flexDirection="column" alignItems="end">
-        <FormControl mb="20px">
-          <FormLabel htmlFor="username">Email</FormLabel>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Flex flexDirection="column" alignItems="end" gap="20px">
+        <FormControl isRequired>
+          <FormLabel htmlFor="email">Email</FormLabel>
           <Input
             id="email"
             type="email"
             variant="flushed"
             focusBorderColor="secondaryColor"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            placeholder="Enter e-mail"
+            {...register('email', { required: true })}
+            p="5px 10px"
           />
+          {errors.email && <span>This field is required</span>}
         </FormControl>
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel htmlFor="password">Password</FormLabel>
           <Input
             id="password"
             type="password"
             variant="flushed"
             focusBorderColor="secondaryColor"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            placeholder="Enter password"
+            {...register('password', { required: true })}
+            p="5px 10px"
           />
+          {errors.password && <span>This field is required</span>}
         </FormControl>
-        <Button type="submit" colorScheme="red" mt="20px">
+        <Button type="submit" colorScheme="red" mb="15px">
           Register
         </Button>
       </Flex>
