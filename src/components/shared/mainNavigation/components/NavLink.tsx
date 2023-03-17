@@ -5,10 +5,11 @@ import { useRouter } from 'next/router';
 interface INavLink {
   href: string;
   title: string;
+  isAuth: boolean;
 }
 
 // Navigation link component
-export const NavLink = ({ href, title }: INavLink) => {
+export const NavLink = ({ href, title, isAuth }: INavLink) => {
   const router = useRouter();
   const isCurrent = router.asPath.includes(href);
 

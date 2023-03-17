@@ -3,77 +3,40 @@ import { LoginForm } from '../../../features/authForms/LoginForm';
 import { RegisterForm } from '../../../features/authForms/RegisterForm';
 import { CustomModal } from '../../modal/CustomModal';
 import { NavLink } from './NavLink';
+import useAuth from '../../../../hooks/useAuth';
 
 // Desktop navigation (depending on user login status we are rendering authNav and unAuthNav)
 export const DesktopNav = () => {
-  const {
-    isOpen: isLoginOpen,
-    onOpen: onLoginOpen,
-    onClose: onLoginClose,
-  } = useDisclosure();
-  const {
-    isOpen: isRegisterOpen,
-    onOpen: onRegisterOpen,
-    onClose: onRegisterClose,
-  } = useDisclosure();
+  const { user, logout } = useAuth();
+  const isAuth = user !== null;
 
-  const isAuth = true;
+  // HELPER FUNCTIONS
+  // ---------------
+  const handleLogout = async () => {
+    await logout();
+  };
 
   // MAIN RENDER
   // ----------
   return (
     <Flex as="nav">
-      {isAuth ? (
-        // Render authenticated desktop navigation
-        <>
-          <NavLink href="/comics" title="Comics" />
-          <NavLink href="/series" title="Series" />
-          <NavLink href="/stories" title="Stories" />
+      <>
+        <NavLink href="/comics" title="Comics" isAuth={isAuth} />
+        <NavLink href="/series" title="Series" isAuth={isAuth} />
+        <NavLink href="/stories" title="Stories" isAuth={isAuth} />
 
+        {isAuth ? (
           <Button
             variant="outline"
             ml="15px"
             transition="all 0.1s"
             _hover={{ transform: 'scale(1.1)' }}
+            onClick={handleLogout}
           >
             Logout
           </Button>
-        </>
-      ) : (
-        // Render unAuthenticated desktop navigation
-        <Flex gap="15px">
-          <CustomModal
-            variant="black"
-            buttonName="Login"
-            title="LOGIN"
-            footerContent={
-              <Button colorScheme="red" mr={3} onClick={onLoginClose}>
-                Login
-              </Button>
-            }
-            isModalOpen={isLoginOpen}
-            onModalOpen={onLoginOpen}
-            onModalClose={onLoginClose}
-          >
-            <LoginForm />
-          </CustomModal>
-          <CustomModal
-            variant="black"
-            buttonName="Register"
-            title="REGISTER"
-            footerContent={
-              <Button colorScheme="red" mr={3} onClick={onRegisterClose}>
-                Register
-              </Button>
-            }
-            onModalOpen={onRegisterOpen}
-            isModalOpen={isRegisterOpen}
-            onModalClose={onRegisterClose}
-          >
-            <RegisterForm />
-          </CustomModal>
-        </Flex>
-      )}
+        ) : null}
+      </>
     </Flex>
   );
 };

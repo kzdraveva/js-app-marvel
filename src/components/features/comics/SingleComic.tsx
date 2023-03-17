@@ -123,7 +123,7 @@ export default function SingleComic() {
             onModalClose={closeModal}
             isModalOpen={modalType === type}
           >
-            <Flex flexDirection="column" maxH="450px" overflow="auto" gap="5px">
+            <Flex flexDirection="column" maxH="350px" overflow="auto" gap="5px">
               {data.items.map((item) => {
                 if (!href) {
                   return <Text>{item.name}</Text>;

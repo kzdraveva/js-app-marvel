@@ -1,19 +1,52 @@
-import { Flex, Heading, Text } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  Heading,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
 import Link from 'next/link';
+import useAuth from '../../../hooks/useAuth';
 import { MainNavigation } from '../../shared/mainNavigation/MainNavigation';
+import { LoginForm } from '../authForms/LoginForm';
+import { RegisterForm } from '../authForms/RegisterForm';
 import LandingPageWrapper from './components/LandingPageWrapper';
 
 // Landing page component
 export default function LandingPage() {
+  const {
+    isOpen: isLoginOpen,
+    onOpen: onLoginOpen,
+    onClose: onLoginClose,
+  } = useDisclosure();
+  const {
+    isOpen: isRegisterOpen,
+    onOpen: onRegisterOpen,
+    onClose: onRegisterClose,
+  } = useDisclosure();
+
+  const { user } = useAuth();
+  const isAuth = user !== null;
+
+  //HELPER FUNCTIONS
+  // --------------
+
   // MAIN RENDER
   // -----------
   return (
     <LandingPageWrapper>
-      <MainNavigation />
+      <MainNavigation isAuth={isAuth} />
       <Flex
         height="calc(100vh - 110px)"
         justifyContent="center"
         alignItems="center"
+        flexDirection="column"
       >
         <Heading as="h1" w="70%" textAlign="center">
           <Link href="https://www.marvel.com/" target="_blank">
@@ -25,6 +58,47 @@ export default function LandingPage() {
           blockbuster movies, our app has everything you need to experience the
           magic of Marvel like never before.
         </Heading>
+        {!isAuth ? (
+          <Flex gap="20px" mt="20px">
+            <>
+              <Button onClick={onLoginOpen} colorScheme="red">
+                Login
+              </Button>
+
+              <Modal isOpen={isLoginOpen} onClose={onLoginClose} isCentered>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Login</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <LoginForm onClose={onLoginClose} />
+                  </ModalBody>
+                </ModalContent>
+              </Modal>
+            </>
+
+            <>
+              <Button onClick={onRegisterOpen} colorScheme="red">
+                Register
+              </Button>
+
+              <Modal
+                isOpen={isRegisterOpen}
+                onClose={onRegisterClose}
+                isCentered
+              >
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Register</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <RegisterForm onClose={onRegisterClose} />
+                  </ModalBody>
+                </ModalContent>
+              </Modal>
+            </>
+          </Flex>
+        ) : null}
       </Flex>
     </LandingPageWrapper>
   );

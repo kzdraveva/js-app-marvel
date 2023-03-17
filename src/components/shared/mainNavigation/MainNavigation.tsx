@@ -4,9 +4,8 @@ import { Logo } from '../../../assets/images/Logo';
 import { DesktopNav } from './components/DesktopNav';
 import { MobileNav } from './components/MobileNav';
 
-
 // Main navigation component
-export const MainNavigation = () => {
+export const MainNavigation = (isAuth) => {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   // MAIN RENDER
@@ -16,7 +15,7 @@ export const MainNavigation = () => {
       <Link href="/" passHref>
         <Logo width="100px" height="50px" />
       </Link>
-      {isMobile ? <MobileNav /> : <DesktopNav />}
+      {isAuth ? isMobile ? <MobileNav /> : <DesktopNav /> : null}
     </Flex>
   );
 };

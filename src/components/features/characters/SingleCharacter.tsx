@@ -121,7 +121,7 @@ export default function SingleCharacter() {
             onModalClose={closeModal}
             isModalOpen={modalType === type}
           >
-            <Flex flexDirection="column" maxH="450px" overflow="auto" gap="5px">
+            <Flex flexDirection="column" maxH="350px" overflow="auto" gap="5px">
               {data.items.map((item) => {
                 return (
                   <Link
