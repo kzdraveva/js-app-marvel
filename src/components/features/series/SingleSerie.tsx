@@ -202,6 +202,7 @@ export default function SingleSerie() {
             overflow="auto"
             flexDirection="column"
             gap="10px"
+            p="5px"
           >
             <Heading>{title}</Heading>
             <Text>{description}</Text>

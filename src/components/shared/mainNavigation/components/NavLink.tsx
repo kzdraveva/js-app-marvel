@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 interface INavLink {
   href: string;
   title: string;
-  isAuth: boolean;
 }
 
 // Navigation link component

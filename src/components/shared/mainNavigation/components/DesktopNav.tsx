@@ -21,9 +21,9 @@ export const DesktopNav = () => {
   return (
     <Flex as="nav">
       <>
-        <NavLink href="/comics" title="Comics" isAuth={isAuth} />
-        <NavLink href="/series" title="Series" isAuth={isAuth} />
-        <NavLink href="/stories" title="Stories" isAuth={isAuth} />
+        <NavLink href="/comics" title="Comics" />
+        <NavLink href="/series" title="Series" />
+        <NavLink href="/events" title="Events" />
 
         {isAuth ? (
           <Button

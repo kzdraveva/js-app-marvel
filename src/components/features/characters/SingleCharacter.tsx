@@ -78,7 +78,7 @@ export default function SingleCharacter() {
 
     return (
       <>
-        <Flex gap="20px">
+        <Flex gap="20px" p="5px">
           <Text>{title}</Text>
           <Flex flexWrap="wrap" gap="10px">
             {data.items.slice(0, MAX_ITEMS_TO_SHOW).map((item) => {

@@ -126,7 +126,7 @@ export default function SingleComic() {
             <Flex flexDirection="column" maxH="350px" overflow="auto" gap="5px">
               {data.items.map((item) => {
                 if (!href) {
-                  return <Text>{item.name}</Text>;
+                  return <Text key={item.resourceURI}>{item.name}</Text>;
                 }
 
                 return (
@@ -202,6 +202,7 @@ export default function SingleComic() {
             overflow="auto"
             flexDirection="column"
             gap="10px"
+            p="5px"
           >
             <Heading>{title}</Heading>
             <Text>{description}</Text>
