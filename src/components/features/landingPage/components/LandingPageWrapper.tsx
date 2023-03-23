@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 
 // Landing page wrapper component
-export default function LandingPageWrapper({ children }) {
+export default function LandingPageWrapper({children}) {
   // MAIN RENDER
   // -----------
   return (
