@@ -1,7 +1,4 @@
-import { Button, Flex, useDisclosure } from '@chakra-ui/react';
-import { LoginForm } from '../../../features/authForms/LoginForm';
-import { RegisterForm } from '../../../features/authForms/RegisterForm';
-import { CustomModal } from '../../modal/CustomModal';
+import { Button, Flex } from '@chakra-ui/react';
 import { NavLink } from './NavLink';
 import useAuth from '../../../../hooks/useAuth';
 
@@ -19,7 +16,7 @@ export const DesktopNav = () => {
   // MAIN RENDER
   // ----------
   return (
-    <Flex as="nav">
+    <Flex as="nav" alignItems="center">
       <>
         <NavLink href="/comics" title="Comics" />
         <NavLink href="/series" title="Series" />

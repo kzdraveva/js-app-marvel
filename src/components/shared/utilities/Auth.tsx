@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useAuth from '../../../hooks/useAuth';
 
+// HOC Wrapper used for wrapping the authenticated components (pages)
 const withAuth = (WrappedComponent) => {
   const AuthWrapper = (props) => {
     const { user, isLoading } = useAuth();

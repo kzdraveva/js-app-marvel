@@ -19,9 +19,11 @@ const MAX_ITEMS_TO_SHOW = 10;
 
 // Single serie component
 export default function SingleSerie() {
-  const [modalType, setModalType] = useState(null);
   const router = useRouter();
   const { id } = router.query;
+
+  const [modalType, setModalType] = useState(null);
+
   const { data, isLoading } = useSingleSerie(id);
 
   // HELPER FUNCTIONS

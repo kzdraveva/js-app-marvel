@@ -1,13 +1,20 @@
+import { StarIcon } from '@chakra-ui/icons';
 import { Flex, Text, Image } from '@chakra-ui/react';
 import Link from 'next/link';
+import { useRatings } from '../../../hooks/useRatings';
+import { RatingStars } from '../../features/rating/RatingStars';
 
 interface IComicCard {
   src: string;
   title: string;
+  cardId: number | string;
+  href: string;
 }
 
 // Card component
-export const Card = ({ src, title, cardId, href }) => {
+export const Card = ({ src, title, cardId, href }: IComicCard) => {
+  const { ratings } = useRatings(cardId);
+
   // MAIN RENDER
   // -----------
   return (
@@ -22,9 +29,14 @@ export const Card = ({ src, title, cardId, href }) => {
         _hover={{ transform: 'scale(1.1)' }}
       >
         <Image src={src} w="170px" h="300px" mb="10px" />
-        <Text fontWeight="extrabold" fontSize="xl" noOfLines={1} w="170px">
-          {title}
-        </Text>
+        <Flex>
+          <Text fontWeight="extrabold" fontSize="xl" noOfLines={1} w="145px">
+            {title}
+          </Text>
+          <Flex alignItems="center" gap="5px">
+            <StarIcon w={4} h={4} color="yellow.500" /> {ratings?.stars || 0}
+          </Flex>
+        </Flex>
       </Flex>
     </Link>
   );

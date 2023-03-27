@@ -5,7 +5,7 @@ import { DesktopNav } from './components/DesktopNav';
 import { MobileNav } from './components/MobileNav';
 
 // Main navigation component
-export const MainNavigation = (isAuth: boolean) => {
+export const MainNavigation = ({ isAuth }) => {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   // MAIN RENDER

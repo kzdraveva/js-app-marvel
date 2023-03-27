@@ -20,17 +20,16 @@ const LIMIT = 20;
 // Comics list component
 export default function ComicsList() {
   const router = useRouter();
-  const [inputValue, setInputValue] = useState('');
-  const [offsetValue, setOffsetValue] = useState(0);
-
   const { title } = router.query;
   const { query } = router;
+
+  const [inputValue, setInputValue] = useState('');
+  const [offsetValue, setOffsetValue] = useState(0);
 
   const { data, isLoading } = useComicsList(title, offsetValue, LIMIT);
   const newComics = GetNewComicsListResult(data);
 
   const debouncedSearchInput = useDebounce(inputValue, 500);
-
   useEffect(() => {
     router.push({
       query: {

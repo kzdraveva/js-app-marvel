@@ -19,11 +19,11 @@ const LIMIT = 20;
 // Series list component
 export default function SeriesList() {
   const router = useRouter();
-  const [inputValue, setInputValue] = useState('');
-  const [offsetValue, setOffsetValue] = useState(0);
-
   const { title } = router.query;
   const { query } = router;
+
+  const [inputValue, setInputValue] = useState('');
+  const [offsetValue, setOffsetValue] = useState(0);
 
   const { data, isLoading } = useSeriesList(title, offsetValue, LIMIT);
 

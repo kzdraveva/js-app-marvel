@@ -4,7 +4,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useSingleEvent } from '../../../hooks/useSingleEvent';
-import { IEventsListCharacters, IEventsListCreators } from '../../../interfaces/IEventsList';
+import {
+  IEventsListCharacters,
+  IEventsListCreators,
+} from '../../../interfaces/IEventsList';
 import { CustomModal } from '../../shared/modal/CustomModal';
 
 enum ModalTypes {
@@ -16,12 +19,11 @@ const MAX_ITEMS_TO_SHOW = 10;
 
 // Single event component
 export default function SingleEvent() {
-  const [modalType, setModalType] = useState(null);
   const router = useRouter();
   const { id } = router.query;
-  const { data, isLoading } = useSingleEvent(id);
 
-  console.log("data", data)
+  const [modalType, setModalType] = useState(null);
+  const { data, isLoading } = useSingleEvent(id);
 
   // HELPER FUNCTIONS
   // ----------------

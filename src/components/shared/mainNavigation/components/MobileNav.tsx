@@ -18,9 +18,11 @@ import { useRouter } from 'next/router';
 
 // Mobile navigation (depending on user login status we are rendering authNav and unAuthNav)
 export const MobileNav = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const { isAuth, logout } = useAuth();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { logout } = useAuth();
 
   // HELPER FUNCTIONS
   // ----------------

@@ -5,7 +5,9 @@ interface IEventsSlide {
   children: any;
 }
 
+// Component for Events Slide
 export const EventsSlide = ({ isActive, children }: IEventsSlide) => {
+  // Transitions
   const transitionDuration = '0.5s';
   const transitionTiming = 'ease-in-out';
   const transitionStyles = {
@@ -15,6 +17,8 @@ export const EventsSlide = ({ isActive, children }: IEventsSlide) => {
     exited: { transform: 'translateX(100%)' },
   };
 
+  // MAIN RENDER
+  // -----------
   return (
     <Box
       w="100%"
