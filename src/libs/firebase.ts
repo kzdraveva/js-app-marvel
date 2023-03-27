@@ -1,19 +1,28 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/database';
+import {
+  firebaseApiKey,
+  firebaseAppId,
+  firebaseAuthDomain,
+  firebaseDatabaseUrl,
+  firebaseMeasurmentId,
+  firebaseMessagingSenderId,
+  firebaseProjectId,
+  firebaseStorageBucket,
+} from '../constants/global';
 
 // Firebase initialization
 // -----------------------
 const firebaseConfig = {
-  apiKey: 'AIzaSyDcwwqnLBoHoncAe3r7TO7HCM-vVp2u6cw',
-  authDomain: 'js-marvel-app.firebaseapp.com',
-  projectId: 'js-marvel-app',
-  storageBucket: 'js-marvel-app.appspot.com',
-  messagingSenderId: '539129003779',
-  appId: '1:539129003779:web:b9e6b6222396a183d37336',
-  measurementId: 'G-T9R77YC8V1',
-  databaseURL:
-    'https://js-marvel-app-default-rtdb.europe-west1.firebasedatabase.app',
+  apiKey: firebaseApiKey,
+  authDomain: firebaseAuthDomain,
+  projectId: firebaseProjectId,
+  storageBucket: firebaseStorageBucket,
+  messagingSenderId: firebaseMessagingSenderId,
+  appId: firebaseAppId,
+  measurementId: firebaseMeasurmentId,
+  databaseURL: firebaseDatabaseUrl,
 };
 
 if (!firebase.apps.length) {

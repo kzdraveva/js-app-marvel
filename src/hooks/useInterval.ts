@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 
+// Custom hook used for the slideshow in events tab
 export const useInterval = (callbackFn, delay ) => {
   const savedCallback = useRef(null);
 
