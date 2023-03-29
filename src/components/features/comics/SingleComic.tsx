@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useAuth from '../../../hooks/useAuth';
-import { useRatings } from '../../../hooks/useRatings';
+import { useComicsRatings } from '../../../hooks/useComicsRatings';
 import { useSingleComic } from '../../../hooks/useSingleComic';
 import {
   ISingleComicCharacters,
@@ -31,7 +31,7 @@ export default function SingleComic() {
 
   // Custom hooks
   const { user } = useAuth();
-  const { addRating, ratings } = useRatings(id);
+  const { addRating, ratings } = useComicsRatings(id);
   const { data, isLoading } = useSingleComic(id);
 
   useEffect(() => {
@@ -226,7 +226,10 @@ export default function SingleComic() {
             p="5px"
           >
             <Heading>{title}</Heading>
-            <RatingStars onChange={handleRatingChange} ratingValue={currentRating} />
+            <RatingStars
+              onChange={handleRatingChange}
+              ratingValue={currentRating}
+            />
             <Text mt="15px">{description}</Text>
             {data?.data.results[0].characters.items.length > 1 &&
               renderCharacters()}

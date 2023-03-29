@@ -11,7 +11,7 @@ interface IRatingData {
 }
 
 // Custom hook for fetching or updating the ratings
-export const useRatings = (id: string | string[] | number) => {
+export const useComicsRatings = (id: string | string[] | number) => {
   const { data, mutate } = useSWR(`comics/${id}`, (path) =>
     database
       .ref(path)

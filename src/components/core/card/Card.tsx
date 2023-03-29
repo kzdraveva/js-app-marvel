@@ -1,8 +1,7 @@
 import { StarIcon } from '@chakra-ui/icons';
 import { Flex, Text, Image } from '@chakra-ui/react';
 import Link from 'next/link';
-import useAuth from '../../../hooks/useAuth';
-import { useRatings } from '../../../hooks/useRatings';
+import { useComicsRatings } from '../../../hooks/useComicsRatings';
 
 interface IComicCard {
   src: string;
@@ -13,7 +12,7 @@ interface IComicCard {
 
 // Card component
 export const Card = ({ src, title, cardId, href }: IComicCard) => {
-  const { averageRating } = useRatings(cardId);
+  const { averageRating } = useComicsRatings(cardId);
 
   // MAIN RENDER
   // -----------
