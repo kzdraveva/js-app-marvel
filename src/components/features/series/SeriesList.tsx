@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { useSeriesList } from '../../../hooks/useSeriesList';
-import { Card } from '../../core/card/Card';
+import { Card, CardType } from '../../core/card/Card';
 import { Pagination } from '../../shared/pagination/Pagination';
 
 const LIMIT = 20;
@@ -121,6 +121,7 @@ export default function SeriesList() {
                   title={serie.title}
                   src={thumbnail}
                   href="/series"
+                  type={CardType.Serie}
                 />
               );
             })}

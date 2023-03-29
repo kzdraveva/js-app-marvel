@@ -2,17 +2,28 @@ import { StarIcon } from '@chakra-ui/icons';
 import { Flex, Text, Image } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useComicsRatings } from '../../../hooks/useComicsRatings';
+import { useSeriesRatings } from '../../../hooks/useSeriesRatings';
+
+export enum CardType {
+  Comic = 'Comic',
+  Serie = 'Serie',
+}
 
 interface IComicCard {
   src: string;
   title: string;
   cardId: number | string;
   href: string;
+  type: CardType;
 }
 
 // Card component
-export const Card = ({ src, title, cardId, href }: IComicCard) => {
-  const { averageRating } = useComicsRatings(cardId);
+export const Card = ({ src, title, cardId, href, type }: IComicCard) => {
+  const { averageRating: comicAverageRating } = useComicsRatings(cardId);
+  const { averageRating: serieAverageRating } = useSeriesRatings(cardId);
+
+  const averageRating =
+    type === 'Comic' ? comicAverageRating : serieAverageRating;
 
   // MAIN RENDER
   // -----------

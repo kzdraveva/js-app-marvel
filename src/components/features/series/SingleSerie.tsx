@@ -2,13 +2,16 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Image, Flex, Spinner, Heading, Text, Button } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useAuth from '../../../hooks/useAuth';
+import { useSeriesRatings } from '../../../hooks/useSeriesRatings';
 import { useSingleSerie } from '../../../hooks/useSingleSerie';
 import {
   ISingleSerieCharacters,
   ISingleSerieCreators,
 } from '../../../interfaces/ISingleSerie';
 import { CustomModal } from '../../shared/modal/CustomModal';
+import { RatingStars } from '../rating/RatingStars';
 
 enum ModalTypes {
   Characters = 'Characterss',
@@ -24,9 +27,18 @@ export default function SingleSerie() {
 
   // Component state
   const [modalType, setModalType] = useState(null);
+  const [currentRating, setCurrentRating] = useState(null);
 
   // Custom hooks
+  const { user } = useAuth();
   const { data, isLoading } = useSingleSerie(id);
+  const { ratings, addRating } = useSeriesRatings(id);
+
+  useEffect(() => {
+    if (ratings && user) {
+      setCurrentRating(ratings[user.uid]?.stars || null);
+    }
+  }, [ratings, user]);
 
   // HELPER FUNCTIONS
   // ----------------
@@ -45,6 +57,11 @@ export default function SingleSerie() {
 
   const closeModal = () => {
     setModalType(null);
+  };
+
+  const handleRatingChange = (value) => {
+    addRating(value, user?.uid);
+    setCurrentRating(value);
   };
 
   // HELPER RENDER FUNCTIONS
@@ -209,6 +226,10 @@ export default function SingleSerie() {
             p="5px"
           >
             <Heading>{title}</Heading>
+            <RatingStars
+              onChange={handleRatingChange}
+              ratingValue={currentRating}
+            />
             <Text>{description}</Text>
             {data?.data.results[0].characters.items.length > 1 &&
               renderCharacters()}

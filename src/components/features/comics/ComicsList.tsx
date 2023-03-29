@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { useComicsList } from '../../../hooks/useComicsList';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { GetNewComicsListResult } from '../../../utils/comicsList';
-import { Card } from '../../core/card/Card';
+import { Card, CardType } from '../../core/card/Card';
 import { Pagination } from '../../shared/pagination/Pagination';
 
 const LIMIT = 20;
@@ -123,6 +123,7 @@ export default function ComicsList() {
                   title={comic.composedTitle}
                   src={thumbnail}
                   href="/comics"
+                  type={CardType.Comic}
                 />
               );
             })}
