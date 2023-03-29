@@ -34,7 +34,7 @@ export const Card = ({ src, title, cardId, href }: IComicCard) => {
             {title}
           </Text>
           <Flex alignItems="center" gap="5px">
-            <StarIcon w={4} h={4} color="yellow.500" /> {averageRating || 0}
+            <StarIcon w={4} h={4} color="yellow" /> {averageRating || 0}
           </Flex>
         </Flex>
       </Flex>
