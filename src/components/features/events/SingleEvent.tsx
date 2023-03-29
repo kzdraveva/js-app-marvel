@@ -22,7 +22,10 @@ export default function SingleEvent() {
   const router = useRouter();
   const { id } = router.query;
 
+  // Component state
   const [modalType, setModalType] = useState(null);
+
+  // Custom hooks
   const { data, isLoading } = useSingleEvent(id);
 
   // HELPER FUNCTIONS

@@ -2,14 +2,14 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Image, Flex, Spinner, Heading, Text, Button } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useAuth from '../../../hooks/useAuth';
 import { useRatings } from '../../../hooks/useRatings';
 import { useSingleComic } from '../../../hooks/useSingleComic';
 import {
   ISingleComicCharacters,
   ISingleComicCreators,
 } from '../../../interfaces/ISingleComic';
-import { database } from '../../../libs/firebase';
 import { CustomModal } from '../../shared/modal/CustomModal';
 import { RatingStars } from '../rating/RatingStars';
 
@@ -19,17 +19,26 @@ enum ModalTypes {
 }
 
 const MAX_ITEMS_TO_SHOW = 10;
-const comicsRef = database.ref('comics');
 
 // Single comic component
 export default function SingleComic() {
   const router = useRouter();
   const { id } = router.query;
 
+  // Component state
   const [modalType, setModalType] = useState(null);
-  const { ratings, addRating } = useRatings(id);
+  const [currentRating, setCurrentRating] = useState(null);
 
+  // Custom hooks
+  const { user } = useAuth();
+  const { addRating, ratings } = useRatings(id);
   const { data, isLoading } = useSingleComic(id);
+
+  useEffect(() => {
+    if (ratings && user) {
+      setCurrentRating(ratings[user.uid]?.stars || null);
+    }
+  }, [ratings, user]);
 
   // HELPER FUNCTIONS
   // ----------------
@@ -51,8 +60,8 @@ export default function SingleComic() {
   };
 
   const handleRatingChange = (value) => {
-    comicsRef.child(data.data.results[0].id.toString());
-    addRating(value);
+    addRating(value, user?.uid);
+    setCurrentRating(value);
   };
 
   // HELPER RENDER FUNCTIONS
@@ -174,7 +183,7 @@ export default function SingleComic() {
   const title = data?.data.results[0].title;
   const description = data?.data.results[0].description;
 
-  // MAIN RENDERƒ
+  // MAIN RENDER
   // -----------
   return (
     <>
@@ -217,10 +226,7 @@ export default function SingleComic() {
             p="5px"
           >
             <Heading>{title}</Heading>
-            <RatingStars
-              onChange={handleRatingChange}
-              rating={ratings?.stars}
-            />
+            <RatingStars onChange={handleRatingChange} ratingValue={currentRating} />
             <Text mt="15px">{description}</Text>
             {data?.data.results[0].characters.items.length > 1 &&
               renderCharacters()}

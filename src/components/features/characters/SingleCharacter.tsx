@@ -21,10 +21,13 @@ const MAX_ITEMS_TO_SHOW = 5;
 
 // Single character component
 export default function SingleCharacter() {
-  const [modalType, setModalType] = useState(null);
-
   const router = useRouter();
   const { id } = router.query;
+
+  // Component state
+  const [modalType, setModalType] = useState(null);
+
+  // Custom hooks
   const { data, isLoading } = useSingleCharacter(id);
 
   // HELPER FUNCTIONS

@@ -22,8 +22,10 @@ export default function SingleSerie() {
   const router = useRouter();
   const { id } = router.query;
 
+  // Component state
   const [modalType, setModalType] = useState(null);
 
+  // Custom hooks
   const { data, isLoading } = useSingleSerie(id);
 
   // HELPER FUNCTIONS

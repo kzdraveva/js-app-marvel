@@ -4,8 +4,12 @@ import { Logo } from '../../../assets/images/Logo';
 import { DesktopNav } from './components/DesktopNav';
 import { MobileNav } from './components/MobileNav';
 
+interface IMainNavigation {
+  isAuth: boolean;
+}
 // Main navigation component
-export const MainNavigation = ({ isAuth }) => {
+export const MainNavigation = ({ isAuth }: IMainNavigation) => {
+  // Custom hooks
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   // MAIN RENDER

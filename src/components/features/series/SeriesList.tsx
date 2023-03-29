@@ -22,11 +22,12 @@ export default function SeriesList() {
   const { title } = router.query;
   const { query } = router;
 
+  // Component state
   const [inputValue, setInputValue] = useState('');
   const [offsetValue, setOffsetValue] = useState(0);
 
+  // Custom hooks
   const { data, isLoading } = useSeriesList(title, offsetValue, LIMIT);
-
   const debouncedSearchInput = useDebounce(inputValue, 500);
 
   useEffect(() => {

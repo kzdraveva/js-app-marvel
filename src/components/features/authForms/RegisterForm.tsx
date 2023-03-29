@@ -9,16 +9,25 @@ import {
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 
+interface IRegisterForm {
+  onClose(): void;
+}
+
 // Register form component
-export const RegisterForm = ({ onClose }) => {
+export const RegisterForm = ({ onClose }: IRegisterForm) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  // Custom hooks
   const { register: registerUser } = useAuth();
+
   const toast = useToast();
 
+  // HELPER FUNCTIONS
+  // ----------------
   const onSubmit = async (formData) => {
     try {
       await registerUser(formData.email, formData.password);

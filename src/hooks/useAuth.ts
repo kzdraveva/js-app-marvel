@@ -7,7 +7,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '../libs/firebase';
 
-// Custom component for authentication
+// Custom hook for authentication
 // using Firebase
 const useAuth = () => {
   const [user, setUser] = useState(null);
@@ -26,8 +26,15 @@ const useAuth = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
+      if (user) {
+        await user.getIdToken().then((idToken) => {
+          localStorage.setItem('idToken', idToken);
+        });
+      } else {
+        localStorage.removeItem('idToken');
+      }
       setIsLoading(false);
     });
 

@@ -3,7 +3,7 @@ import md5 from 'md5';
 
 // Fetcher
 export const fetcher = async (url: string, args?: object) => {
-  // This calculations are needed in order to succesfully fetch the data
+  // These calculations are needed in order to succesfully fetch the data
   const publickey = '9b0d08ff4212f0dc2553f1cade091f4f';
   const privatekey = 'b92a930f299cb35ed0c39b046a286214331c43e5';
   const ts = new Date().getTime();

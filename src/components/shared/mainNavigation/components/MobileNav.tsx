@@ -20,8 +20,10 @@ import { useRouter } from 'next/router';
 export const MobileNav = () => {
   const router = useRouter();
 
+  // Component state
   const [isOpen, setIsOpen] = useState(false);
 
+  // Custom hooks
   const { logout } = useAuth();
 
   // HELPER FUNCTIONS

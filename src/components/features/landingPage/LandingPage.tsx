@@ -31,6 +31,7 @@ export default function LandingPage() {
     onClose: onRegisterClose,
   } = useDisclosure();
 
+  // Custom hooks
   const { isAuth } = useAuth();
 
   // MAIN RENDER

@@ -1,8 +1,13 @@
 import { StarIcon } from '@chakra-ui/icons';
 import { Box, Stack } from '@chakra-ui/react';
 
+interface IRatingStars {
+  onChange(value): void;
+  ratingValue: number;
+}
+
 // Rating stars component
-export const RatingStars = ({ onChange, rating }) => {
+export const RatingStars = ({ onChange, ratingValue }: IRatingStars) => {
   // HELPER FUNCTIONS
   // ----------------
   const handleClick = (value) => {
@@ -18,8 +23,8 @@ export const RatingStars = ({ onChange, rating }) => {
           key={value}
           as="button"
           onClick={() => handleClick(value)}
-          color={value <= rating ? 'yellow.500' : 'gray.300'}
-          _hover={{ color: 'yellow.500' }}
+          color={value <= ratingValue ? 'yellow' : 'primaryColor'}
+          _hover={{ color: 'yellow' }}
         >
           <StarIcon w={4} h={4} />
         </Box>

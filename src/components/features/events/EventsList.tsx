@@ -8,9 +8,13 @@ import { EventsSlide } from './EventsSlide';
 
 // Events list component
 export default function EventsList() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const { data, isLoading } = useEventsList();
   const router = useRouter();
+
+  // Component state
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Custom hooks
+  const { data, isLoading } = useEventsList();
 
   // Define the slide duration and advance the slide automatically
   const slideDuration = 5000; // 5 seconds

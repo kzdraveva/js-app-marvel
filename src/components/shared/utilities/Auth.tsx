@@ -14,7 +14,8 @@ const withAuth = (WrappedComponent) => {
       }
     }, [user, isLoading, router]);
 
-    return isLoading ? <p>Loading...</p> : <WrappedComponent {...props} />;
+    // Render the wrapped component if the user is authenticated
+    return user ? <WrappedComponent {...props} /> : null;
   };
 
   return AuthWrapper;

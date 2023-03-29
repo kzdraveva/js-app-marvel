@@ -4,8 +4,8 @@ import useAuth from '../../../../hooks/useAuth';
 
 // Desktop navigation (depending on user login status we are rendering authNav and unAuthNav)
 export const DesktopNav = () => {
-  const { user, logout } = useAuth();
-  const isAuth = user !== null;
+  // Custom hooks
+  const { isAuth, logout } = useAuth();
 
   // HELPER FUNCTIONS
   // ---------------

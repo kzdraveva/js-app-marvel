@@ -9,6 +9,7 @@ interface IAuthWrapper {
 
 // Wrapper for authenticated pages
 export default function AuthWrapper({ children, title }: IAuthWrapper) {
+  // Custom hooks
   const { isAuth } = useAuth();
 
   // MAIN RENDER

@@ -23,13 +23,15 @@ export default function ComicsList() {
   const { title } = router.query;
   const { query } = router;
 
+  // Component state
   const [inputValue, setInputValue] = useState('');
   const [offsetValue, setOffsetValue] = useState(0);
 
+  // Custom hooks
   const { data, isLoading } = useComicsList(title, offsetValue, LIMIT);
   const newComics = GetNewComicsListResult(data);
-
   const debouncedSearchInput = useDebounce(inputValue, 500);
+
   useEffect(() => {
     router.push({
       query: {
