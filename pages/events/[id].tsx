@@ -1,12 +1,12 @@
 import SingleEvent from '../../src/components/features/events/SingleEvent/SingleEvent';
-import AuthWrapper from '../../src/components/shared/layouts/Layout/Layout';
+import Layout from '../../src/components/shared/layouts/Layout/Layout';
 
 // Single Event page
 const SingleEventPage = () => {
   return (
-    <AuthWrapper title="Events">
+    <Layout title="Events">
       <SingleEvent />
-    </AuthWrapper>
+    </Layout>
   );
 };
 

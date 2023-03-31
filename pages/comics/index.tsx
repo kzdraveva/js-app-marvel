@@ -1,13 +1,13 @@
 import ComicsList from '../../src/components/features/comics/ComicsList/ComicsList';
-import AuthWrapper from '../../src/components/shared/layouts/Layout/Layout';
+import Layout from '../../src/components/shared/layouts/Layout/Layout';
 import withAuth from '../../src/components/shared/utilities/Auth';
 
 // Comics list page
 const ComicsPage = () => {
   return (
-    <AuthWrapper title="Comics">
+    <Layout title="Comics">
       <ComicsList />
-    </AuthWrapper>
+    </Layout>
   );
 };
 
