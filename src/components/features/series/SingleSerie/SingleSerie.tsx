@@ -2,13 +2,16 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Image, Flex, Spinner, Heading, Text, Button } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { useSingleEvent } from '../../../hooks/useSingleEvent';
+import { useEffect, useState } from 'react';
+import useAuth from '../../../../hooks/useAuth';
+import { useSeriesRatings } from '../../../../hooks/useSeriesRatings';
+import { useSingleSerie } from '../../../../hooks/useSingleSerie';
 import {
-  IEventsListCharacters,
-  IEventsListCreators,
-} from '../../../interfaces/IEventsList';
-import { CustomModal } from '../../shared/modal/CustomModal';
+  ISingleSerieCharacters,
+  ISingleSerieCreators,
+} from '../../../../interfaces/ISingleSerie';
+import { CustomModal } from '../../../shared/modals/CustomModal/CustomModal';
+import { RatingStars } from '../../rating/RatingStars/RatingStars';
 
 enum ModalTypes {
   Characters = 'Characterss',
@@ -17,16 +20,25 @@ enum ModalTypes {
 
 const MAX_ITEMS_TO_SHOW = 10;
 
-// Single event component
-export default function SingleEvent() {
+// Single serie component
+export default function SingleSerie() {
   const router = useRouter();
   const { id } = router.query;
 
   // Component state
   const [modalType, setModalType] = useState(null);
+  const [currentRating, setCurrentRating] = useState(null);
 
   // Custom hooks
-  const { data, isLoading } = useSingleEvent(id);
+  const { user } = useAuth();
+  const { data, isLoading } = useSingleSerie(id);
+  const { ratings, addRating } = useSeriesRatings(id);
+
+  useEffect(() => {
+    if (ratings && user) {
+      setCurrentRating(ratings[user.uid]?.stars || null);
+    }
+  }, [ratings, user]);
 
   // HELPER FUNCTIONS
   // ----------------
@@ -45,6 +57,11 @@ export default function SingleEvent() {
 
   const closeModal = () => {
     setModalType(null);
+  };
+
+  const handleRatingChange = (value) => {
+    addRating(value, user?.uid);
+    setCurrentRating(value);
   };
 
   // HELPER RENDER FUNCTIONS
@@ -109,7 +126,7 @@ export default function SingleEvent() {
   };
 
   const renderBubbleBtn = (
-    data: IEventsListCharacters | IEventsListCreators,
+    data: ISingleSerieCreators | ISingleSerieCharacters,
     title: string,
     type: ModalTypes,
     handleBubbleBtnClick: (type) => void,
@@ -209,6 +226,10 @@ export default function SingleEvent() {
             p="5px"
           >
             <Heading>{title}</Heading>
+            <RatingStars
+              onChange={handleRatingChange}
+              ratingValue={currentRating}
+            />
             <Text>{description}</Text>
             {data?.data.results[0].characters.items.length > 1 &&
               renderCharacters()}

@@ -3,15 +3,15 @@ import { Image, Flex, Spinner, Heading, Text, Button } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import useAuth from '../../../hooks/useAuth';
-import { useSeriesRatings } from '../../../hooks/useSeriesRatings';
-import { useSingleSerie } from '../../../hooks/useSingleSerie';
+import useAuth from '../../../../hooks/useAuth';
+import { useComicsRatings } from '../../../../hooks/useComicsRatings';
+import { useSingleComic } from '../../../../hooks/useSingleComic';
 import {
-  ISingleSerieCharacters,
-  ISingleSerieCreators,
-} from '../../../interfaces/ISingleSerie';
-import { CustomModal } from '../../shared/modal/CustomModal';
-import { RatingStars } from '../rating/RatingStars';
+  ISingleComicCharacters,
+  ISingleComicCreators,
+} from '../../../../interfaces/ISingleComic';
+import { CustomModal } from '../../../shared/modals/CustomModal/CustomModal';
+import { RatingStars } from '../../rating/RatingStars/RatingStars';
 
 enum ModalTypes {
   Characters = 'Characterss',
@@ -20,8 +20,8 @@ enum ModalTypes {
 
 const MAX_ITEMS_TO_SHOW = 10;
 
-// Single serie component
-export default function SingleSerie() {
+// Single comic component
+export default function SingleComic() {
   const router = useRouter();
   const { id } = router.query;
 
@@ -31,8 +31,8 @@ export default function SingleSerie() {
 
   // Custom hooks
   const { user } = useAuth();
-  const { data, isLoading } = useSingleSerie(id);
-  const { ratings, addRating } = useSeriesRatings(id);
+  const { addRating, ratings } = useComicsRatings(id);
+  const { data, isLoading } = useSingleComic(id);
 
   useEffect(() => {
     if (ratings && user) {
@@ -126,7 +126,7 @@ export default function SingleSerie() {
   };
 
   const renderBubbleBtn = (
-    data: ISingleSerieCreators | ISingleSerieCharacters,
+    data: ISingleComicCreators | ISingleComicCharacters,
     title: string,
     type: ModalTypes,
     handleBubbleBtnClick: (type) => void,
@@ -230,7 +230,7 @@ export default function SingleSerie() {
               onChange={handleRatingChange}
               ratingValue={currentRating}
             />
-            <Text>{description}</Text>
+            <Text mt="15px">{description}</Text>
             {data?.data.results[0].characters.items.length > 1 &&
               renderCharacters()}
             {data?.data.results[0].creators.items.length > 1 &&

@@ -3,13 +3,13 @@ import { Box, Button, Flex, Image, Spinner, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useSingleCharacter } from '../../../hooks/useSingleCharacter';
+import { useSingleCharacter } from '../../../../hooks/useSingleCharacter';
 import {
   ISingleCharacterComics,
   ISingleCharacterSeries,
   ISingleCharacterStories,
-} from '../../../interfaces/ISingleCharacter';
-import { CustomModal } from '../../shared/modal/CustomModal';
+} from '../../../../interfaces/ISingleCharacter';
+import { CustomModal } from '../../../shared/modals/CustomModal/CustomModal';
 
 enum ModalTypes {
   Comics = 'Comics',

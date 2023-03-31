@@ -1,5 +1,5 @@
-import SingleSerie from '../../src/components/features/series/SingleSerie';
-import AuthWrapper from '../../src/components/shared/authWrapper/AuthWrapper';
+import SingleSerie from '../../src/components/features/series/SingleSerie/SingleSerie';
+import AuthWrapper from '../../src/components/shared/layouts/Layout/Layout';
 import withAuth from '../../src/components/shared/utilities/Auth';
 
 // Single Serie page

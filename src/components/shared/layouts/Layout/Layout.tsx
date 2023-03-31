@@ -1,6 +1,6 @@
 import { Box, Text } from '@chakra-ui/react';
-import useAuth from '../../../hooks/useAuth';
-import { MainNavigation } from '../mainNavigation/MainNavigation';
+import useAuth from '../../../../hooks/useAuth';
+import { MainNavigation } from '../../mainNavigation/MainNavigation';
 
 interface IAuthWrapper {
   title: string;
@@ -8,7 +8,7 @@ interface IAuthWrapper {
 }
 
 // Wrapper for authenticated pages
-export default function AuthWrapper({ children, title }: IAuthWrapper) {
+export default function Layout({ children, title }: IAuthWrapper) {
   // Custom hooks
   const { isAuth } = useAuth();
 

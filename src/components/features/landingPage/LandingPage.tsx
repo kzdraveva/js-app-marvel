@@ -14,8 +14,8 @@ import {
 import Link from 'next/link';
 import useAuth from '../../../hooks/useAuth';
 import { MainNavigation } from '../../shared/mainNavigation/MainNavigation';
-import { LoginForm } from '../authForms/LoginForm';
-import { RegisterForm } from '../authForms/RegisterForm';
+import { LoginForm } from '../authForms/LoginForm/LoginForm';
+import { RegisterForm } from '../authForms/RegisterForm/RegisterForm';
 import LandingPageWrapper from './components/LandingPageWrapper';
 
 // Landing page component

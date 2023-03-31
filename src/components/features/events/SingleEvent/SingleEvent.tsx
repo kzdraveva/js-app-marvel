@@ -2,16 +2,13 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Image, Flex, Spinner, Heading, Text, Button } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import useAuth from '../../../hooks/useAuth';
-import { useComicsRatings } from '../../../hooks/useComicsRatings';
-import { useSingleComic } from '../../../hooks/useSingleComic';
+import { useState } from 'react';
+import { useSingleEvent } from '../../../../hooks/useSingleEvent';
 import {
-  ISingleComicCharacters,
-  ISingleComicCreators,
-} from '../../../interfaces/ISingleComic';
-import { CustomModal } from '../../shared/modal/CustomModal';
-import { RatingStars } from '../rating/RatingStars';
+  IEventsListCharacters,
+  IEventsListCreators,
+} from '../../../../interfaces/IEventsList';
+import { CustomModal } from '../../../shared/modals/CustomModal/CustomModal';
 
 enum ModalTypes {
   Characters = 'Characterss',
@@ -20,25 +17,16 @@ enum ModalTypes {
 
 const MAX_ITEMS_TO_SHOW = 10;
 
-// Single comic component
-export default function SingleComic() {
+// Single event component
+export default function SingleEvent() {
   const router = useRouter();
   const { id } = router.query;
 
   // Component state
   const [modalType, setModalType] = useState(null);
-  const [currentRating, setCurrentRating] = useState(null);
 
   // Custom hooks
-  const { user } = useAuth();
-  const { addRating, ratings } = useComicsRatings(id);
-  const { data, isLoading } = useSingleComic(id);
-
-  useEffect(() => {
-    if (ratings && user) {
-      setCurrentRating(ratings[user.uid]?.stars || null);
-    }
-  }, [ratings, user]);
+  const { data, isLoading } = useSingleEvent(id);
 
   // HELPER FUNCTIONS
   // ----------------
@@ -57,11 +45,6 @@ export default function SingleComic() {
 
   const closeModal = () => {
     setModalType(null);
-  };
-
-  const handleRatingChange = (value) => {
-    addRating(value, user?.uid);
-    setCurrentRating(value);
   };
 
   // HELPER RENDER FUNCTIONS
@@ -126,7 +109,7 @@ export default function SingleComic() {
   };
 
   const renderBubbleBtn = (
-    data: ISingleComicCreators | ISingleComicCharacters,
+    data: IEventsListCharacters | IEventsListCreators,
     title: string,
     type: ModalTypes,
     handleBubbleBtnClick: (type) => void,
@@ -226,11 +209,7 @@ export default function SingleComic() {
             p="5px"
           >
             <Heading>{title}</Heading>
-            <RatingStars
-              onChange={handleRatingChange}
-              ratingValue={currentRating}
-            />
-            <Text mt="15px">{description}</Text>
+            <Text>{description}</Text>
             {data?.data.results[0].characters.items.length > 1 &&
               renderCharacters()}
             {data?.data.results[0].creators.items.length > 1 &&

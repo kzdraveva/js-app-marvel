@@ -1,5 +1,5 @@
-import SingleComic from '../../src/components/features/comics/SingleComic';
-import AuthWrapper from '../../src/components/shared/authWrapper/AuthWrapper';
+import SingleComic from '../../src/components/features/comics/SingleComic/SingleComic';
+import AuthWrapper from '../../src/components/shared/layouts/Layout/Layout';
 import withAuth from '../../src/components/shared/utilities/Auth';
 
 // Single Comic page

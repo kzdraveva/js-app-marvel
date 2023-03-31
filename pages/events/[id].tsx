@@ -1,5 +1,5 @@
-import SingleEvent from '../../src/components/features/events/SingleEvent';
-import AuthWrapper from '../../src/components/shared/authWrapper/AuthWrapper';
+import SingleEvent from '../../src/components/features/events/SingleEvent/SingleEvent';
+import AuthWrapper from '../../src/components/shared/layouts/Layout/Layout';
 
 // Single Event page
 const SingleEventPage = () => {

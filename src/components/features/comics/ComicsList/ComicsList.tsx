@@ -9,15 +9,16 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useDebounce } from '../../../hooks/useDebounce';
-import { useSeriesList } from '../../../hooks/useSeriesList';
-import { Card, CardType } from '../../core/card/Card';
-import { Pagination } from '../../shared/pagination/Pagination';
+import { useComicsList } from '../../../../hooks/useComicsList';
+import { useDebounce } from '../../../../hooks/useDebounce';
+import { GetNewComicsListResult } from '../../../../utils/comicsList';
+import { Card, CardType } from '../../../core/Card/Card';
+import { Pagination } from '../../../shared/pagination/Pagination';
 
 const LIMIT = 20;
 
-// Series list component
-export default function SeriesList() {
+// Comics list component
+export default function ComicsList() {
   const router = useRouter();
   const { title } = router.query;
   const { query } = router;
@@ -27,7 +28,8 @@ export default function SeriesList() {
   const [offsetValue, setOffsetValue] = useState(0);
 
   // Custom hooks
-  const { data, isLoading } = useSeriesList(title, offsetValue, LIMIT);
+  const { data, isLoading } = useComicsList(title, offsetValue, LIMIT);
+  const newComics = GetNewComicsListResult(data);
   const debouncedSearchInput = useDebounce(inputValue, 500);
 
   useEffect(() => {
@@ -41,12 +43,12 @@ export default function SeriesList() {
 
   // HELPER FUNCTIONS
   // ---------------
-  const filterSeries = (event) => {
+  const filterComics = (event) => {
     setInputValue(event.target.value);
   };
 
   const handlePageChange = (pageNumber) => {
-    const newOffsetValue = (pageNumber - 1) * data?.data.limit;
+    const newOffsetValue = (pageNumber - 1) * newComics.data.limit;
     setOffsetValue(newOffsetValue);
     router.push({
       query: {
@@ -94,7 +96,7 @@ export default function SeriesList() {
             borderColor: 'primaryColor',
             borderRadius: '0',
           }}
-          onChange={filterSeries}
+          onChange={filterComics}
         />
       </InputGroup>
       <Flex
@@ -111,26 +113,26 @@ export default function SeriesList() {
           ? renderSpinner()
           : data?.data.results.length < 1
           ? renderEmptyScreen()
-          : data?.data.results.map((serie) => {
-              const thumbnail = `${serie.thumbnail.path}.${serie.thumbnail.extension}`;
+          : newComics?.data.results.map((comic) => {
+              const thumbnail = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
 
               return (
                 <Card
-                  key={serie.id}
-                  cardId={serie.id}
-                  title={serie.title}
+                  key={comic.id}
+                  cardId={comic.id}
+                  title={comic.composedTitle}
                   src={thumbnail}
-                  href="/series"
-                  type={CardType.Serie}
+                  href="/comics"
+                  type={CardType.Comic}
                 />
               );
             })}
       </Flex>
-      {data?.data.results && (
+      {newComics.data.results && (
         <Pagination
-          currentPage={Math.floor(offsetValue / data?.data.limit) + 1}
+          currentPage={Math.floor(offsetValue / newComics.data.limit) + 1}
           pageRangeDisplayed={3}
-          lastPage={Math.ceil(data?.data.total / data?.data.limit)}
+          lastPage={Math.ceil(newComics.data.total / newComics.data.limit)}
           onPageChange={handlePageChange}
         />
       )}

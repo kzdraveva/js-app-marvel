@@ -1,5 +1,5 @@
-import EventsList from '../../src/components/features/events/EventsList';
-import AuthWrapper from '../../src/components/shared/authWrapper/AuthWrapper';
+import EventsList from '../../src/components/features/events/EventsList/EventsList';
+import AuthWrapper from '../../src/components/shared/layouts/Layout/Layout';
 import withAuth from '../../src/components/shared/utilities/Auth';
 
 // Events list page

@@ -1,10 +1,10 @@
 import { Flex, Spinner, Image, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useEventsList } from '../../../hooks/useEventsList';
-import { useInterval } from '../../../hooks/useInterval';
-import { IEventsList } from '../../../interfaces/IEventsList';
-import { EventsSlide } from './EventsSlide';
+import { useEventsList } from '../../../../hooks/useEventsList';
+import { useInterval } from '../../../../hooks/useInterval';
+import { IEventsList } from '../../../../interfaces/IEventsList';
+import { EventsSlide } from '../EventsSlide/EventsSlide';
 
 // Events list component
 export default function EventsList() {
